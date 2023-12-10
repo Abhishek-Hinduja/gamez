@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <style>
+    body {
+        color: whitesmoke;
+        font-family:fantasy;
+        text-align: center;
+        margin-top: 100px;
+    }
+    
+    @font-face {
+        font-family: header;
+        src: url(assets/KaushanScript-Regular.ttf);
+    }
+    
+    h1 {
+        color: goldenrod;
+        font-family:header;
+        font-size: 50px;
+    }
+    
+    #game {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+    
+    #userPanel,
+    #computerPanel {
+        flex: 1;
+    }
+    
+    #userPanel p,
+    #computerPanel p {
+        font-size: 18px;
+    }
+    
+    .emojiButton {
+        height: 100px;
+        width: 100px;
+        font-size: 75px;
+    }
+    
+    body{
+        background-color: rgb(55, 55, 223);
+    }
+    
+    button{
+        border: 0px;
+        background-color: rgb(55, 55, 223);
+    }
+    
+    #computerEmoji {
+        font-size: 100px;
+    }
+    
+    #resultPanel {
+        flex: 1;
+    }
+    
+    #resultText {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    
+    #scoreText {
+        font-size: 18px;
+    }</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+<body>
+    <div style="text-align: left; margin-left: 40px;
+    margin-top:-30px;
+        font-size: 30px;
+        padding: 5px; "><i style="color:white;" class="fas fa-home home-icon"></i></a></div>
+    <h1>Rock Paper Scissors</h1>
+    <div id="game">
+        <div id="userPanel">
+            <p>Your Choice:</p>
+            <button class="emojiButton" id="rockButton" onclick="play('rock')">👊</button>
+            <button class="emojiButton" id="paperButton" onclick="play('paper')">✋</button>
+            <button class="emojiButton" id="scissorsButton" onclick="play('scissors')">✌️</button>
+        </div>
+        <div id="resultPanel">
+            <p id="resultText">Make your move!</p>
+            <p id="scoreText">Score: You - 0 | Computer - 0</p>
+        </div>
+        <div id="computerPanel">
+            <p>Computer's Choice:</p>
+            <div id="computerEmoji"></div>
+        </div>
+    </div>
+
+    <script>
+    var choices = ["rock", "paper", "scissors"];
+        var userScore = 0;
+        var computerScore = 0;
+        
+        var resultText = document.getElementById("resultText");
+        var scoreText = document.getElementById("scoreText");
+        var computerEmoji = document.getElementById("computerEmoji");
+        
+        function getComputerChoice() {
+            var randomIndex = Math.floor(Math.random() * choices.length);
+            return choices[randomIndex];
+        }
+        
+        function determineWinner(userChoice, computerChoice) {
+            if (userChoice === computerChoice) {
+                return "It's a tie!";
+            } else if (
+                (userChoice === "rock" && computerChoice === "scissors") ||
+                (userChoice === "paper" && computerChoice === "rock") ||
+                (userChoice === "scissors" && computerChoice === "paper")
+            ) {
+                return "You win!";
+            } else {
+                return "Computer wins!";
+            }
+        }
+        
+        function updateScore(result) {
+            if (result === "You win!") {
+                userScore++;
+            } else if (result === "Computer wins!") {
+                computerScore++;
+            }
+            scoreText.textContent = "Score: You - " + userScore + " | Computer - " + computerScore;
+        }
+        
+        function play(userChoice) {
+            var computerChoice = getComputerChoice();
+        
+            computerEmoji.textContent = getEmoji(computerChoice);
+        
+            var result = determineWinner(userChoice, computerChoice);
+            resultText.textContent = result;
+        
+            updateScore(result);
+        }
+        
+        function getEmoji(choice) {
+            switch (choice) {
+                case "rock":
+                    return "👊";
+                case "paper":
+                    return "✋";
+                case "scissors":
+                    return "✌️";
+                default:
+                    return "";
+            }
+        }
+        </script>
+</body>
+</html>
